@@ -30,3 +30,9 @@
 {
 color: red;
 }
+
+#btnRegisterUser {
+	size: 30px; 
+	margin-left: 40%; 
+	margin-top: 10px
+}

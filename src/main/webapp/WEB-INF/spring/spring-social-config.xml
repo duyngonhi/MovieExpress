@@ -1,0 +1,122 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<import resource="servlet-context.xml"/>	
+
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider ref="socialAuthenticationProvider"/>
+        <security:authentication-provider user-service-ref="customUserDetailService"/>
+    </security:authentication-manager>
+
+    <bean id="socialAuthenticationProvider" class="org.springframework.social.security.SocialAuthenticationProvider">
+        <constructor-arg ref="inMemoryUsersConnectionRepository"/>
+        <constructor-arg ref="socialUserDetailService"/>
+    </bean>
+    
+    <bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<constructor-arg name="objectMapper" ref="jacksonObjectMapper" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="jacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
+    <!-- form login beans -->
+    <bean id="appAuthenticationEntryPoint"
+          class="vn.framgia.social.AppAuthenticationEntryPoint">
+        <constructor-arg name="loginFormUrl" value="/services/login"/>
+    </bean>
+    <bean id="rememberMeServices"
+          class="org.springframework.security.web.authentication.NullRememberMeServices"/>
+    <bean id="successHandler" class="vn.framgia.social.AppSuccessHandler"/>
+    <bean id="failureHandler"
+          class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+        <constructor-arg name="defaultFailureUrl" value="/services/accessdenied"/>
+    </bean>
+    <bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <constructor-arg name="logoutSuccessHandler" ref="logoutSuccessHandler"/>
+        <constructor-arg name="handlers">
+            <list>
+                <bean name="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="logoutSuccessHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler"/>
+    <bean class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
+          id="SecurityAuthFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+        <property name="authenticationSuccessHandler" ref="successHandler"/>
+        <property name="authenticationFailureHandler" ref="failureHandler"/>
+        <property name="filterProcessesUrl" value="/j_spring_security_check"/>
+        <property name="rememberMeServices" ref="rememberMeServices"/>
+    </bean>
+
+    <security:http pattern="/images/**" security="none"/>
+    <security:http pattern="/assets/**" security="none"/>
+    <security:http pattern="/services/login" security="none"/>
+    <security:http pattern="/services/accessdenied" security="none"/>
+    <security:http pattern="/services/signup" security="none"/>
+    <security:http pattern="/services/user/register" security="none"/>
+    <security:http pattern="/index" security="none"/>
+    <security:http pattern="/" security="none"/>
+
+    <security:http use-expressions="true" entry-point-ref="appAuthenticationEntryPoint">
+
+        <security:intercept-url pattern="/auth/**" access="permitAll"/>
+        <security:intercept-url pattern="/j_spring_security_check" access="permitAll"/>
+
+        <security:intercept-url pattern="/services/login" access="isAuthenticated()"/>
+		<security:intercept-url pattern="/**" access="isAuthenticated()"/>
+		
+        <!-- Adds social authentication filter to the Spring Security filter chain. -->
+        <security:custom-filter before="PRE_AUTH_FILTER" ref="socialAuthenticationFilter"/>
+        <security:custom-filter position="FORM_LOGIN_FILTER" ref="SecurityAuthFilter"/>
+        <security:custom-filter position="LOGOUT_FILTER" ref="logoutFilter"/>
+    </security:http>
+
+    <bean id="socialAuthenticationFilter" class="org.springframework.social.security.SocialAuthenticationFilter">
+        <constructor-arg name="authManager" ref="authenticationManager"/>
+        <constructor-arg name="userIdSource" ref="userIdSource"/>
+        <constructor-arg name="usersConnectionRepository" ref="inMemoryUsersConnectionRepository"/>
+        <constructor-arg name="authServiceLocator" ref="appSocialAuthenticationServiceRegistry"/>
+        <property name="authenticationSuccessHandler" ref="successHandler"/>
+    </bean>
+
+
+    <bean id="inMemoryUsersConnectionRepository"
+          class="org.springframework.social.connect.mem.InMemoryUsersConnectionRepository">
+        <constructor-arg name="connectionFactoryLocator" ref="appSocialAuthenticationServiceRegistry"/>
+        <property name="connectionSignUp" ref="connectionSignUp"/>
+    </bean>
+
+    <bean id="appSocialAuthenticationServiceRegistry"
+          class="vn.framgia.social.AppSocialAuthenticationServiceRegistry">
+        <constructor-arg>
+            <list>
+                <ref bean="googleAuthenticationService"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="googleAuthenticationService"
+          class="org.springframework.social.google.security.GoogleAuthenticationService">
+        <constructor-arg name="apiKey" value="${google.api.key}"/>
+        <constructor-arg name="appSecret" value="${google.api.secret}"/>
+    </bean>
+
+    <bean id="userIdSource" class="org.springframework.social.security.AuthenticationNameUserIdSource"/>
+
+    <bean id="connectionSignUp" class="vn.framgia.social.AppConnectionSignUp"/>
+</beans>

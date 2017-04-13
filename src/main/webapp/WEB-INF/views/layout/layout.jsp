@@ -8,26 +8,26 @@
 	<title><tiles:insertAttribute name="title" ignore="false" /></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Bootstrap core CSS -->
-	<link href="assets/css/bootstrap.css" rel="stylesheet">
-	<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-
+	<link href="${pageContext.request.contextPath}/assets/css/bootstrap.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+	
 	<!-- Custom styles for this template -->
-	<link href="assets/css/style.css" rel="stylesheet">
-	<link href="assets/css/style-responsive.css" rel="stylesheet">
-	<link href="assets/css/mystyle.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/assets/css/style-responsive.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/assets/css/mystyle.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
 	
 	<!-- js placed at the end of the document so the pages load faster -->
-	<script src="assets/js/jquery.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/jquery-1.8.3.min.js"></script>
-	<script src="assets/js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-	<script class="include" type="text/javascript" src="assets/js/jquery.dcjqaccordion.2.7.js"></script>
-	<script src="assets/js/jquery.scrollTo.min.js"></script>
-	<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
-	<script src="assets/js/common-scripts.js"></script>
-	<script src="assets/js/my-script.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery-1.8.3.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.ui.touch-punch.min.js"></script>
+	<script class="include" type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.scrollTo.min.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/common-scripts.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/my-script.js"></script>
 
 	<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css"/>
 	<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
@@ -66,9 +66,7 @@
 	<section id="main-content">
 		<section class="wrapper">
 			<div class="row">
-				<%--<div class="col-lg-12">--%>
 				<tiles:insertAttribute name="body" />
-				<%--</div>--%>
 			</div>
 		</section>
 	</section>

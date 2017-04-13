@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd https://mvnrepository.com/artifact/org.jsoup/jsoup">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.framgia</groupId>
 	<artifactId>MovieExpress</artifactId>
@@ -18,6 +18,10 @@
 		<tiles-version>2.2.2</tiles-version>
 		<jackson-version>2.8.6</jackson-version>
 		<sring-boot-version>1.5.2.RELEASE</sring-boot-version>
+		
+        <spring.social.version>1.1.0.RELEASE</spring.social.version>
+        <spring.social.facebook.version>1.1.0.RELEASE</spring.social.facebook.version>
+        <spring.social.google.version>1.0.0.RELEASE</spring.social.google.version>
 	</properties>
 
 	<dependencies>
@@ -51,6 +55,11 @@
 
 		<!-- Spring Security -->
 		<dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring.security.version}</version>
@@ -72,6 +81,40 @@
 			<artifactId>spring-boot</artifactId>
 			<version>${sring-boot-version}</version>
 		</dependency>
+		
+		<!-- Spring Social -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-config</artifactId>
+            <version>${spring.social.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-core</artifactId>
+            <version>${spring.social.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
+            <version>${spring.social.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+            <version>${spring.social.version}</version>
+        </dependency>
+        <!-- Spring Social Facebook -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook</artifactId>
+            <version>${spring.social.facebook.version}</version>
+        </dependency>
+        <!-- Spring Social google In -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-google</artifactId>
+            <version>${spring.social.google.version}</version>
+        </dependency>
 
 		<!-- spring JMS -->
 		<dependency>
@@ -191,6 +234,11 @@
 			<artifactId>jackson-core</artifactId>
 			<version>${jackson-version}</version>
 		</dependency>
+		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
 
 		<!-- tiles-core -->
 		<dependency>
@@ -227,7 +275,7 @@
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.8.1</version>
+			<version>1.8.3</version>
 		</dependency>
 	</dependencies>
 

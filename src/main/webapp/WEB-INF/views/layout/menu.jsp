@@ -3,7 +3,7 @@
 <aside>
     <div id="sidebar" class="nav-collapse ">
         <ul class="sidebar-menu" id="nav-accordion">
-            <p class="centered"><a href="#"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+            <p class="centered"><a href="#"><img src="${pageContext.request.contextPath}/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
             <h5 class="centered"><a href="#"><spring:message code="view.menu.lblWebpage"></spring:message></a></h5>
             <li class="sub-menu">
                 <a class="active" href="/films">

@@ -1,9 +1,12 @@
 package vn.framgia.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import vn.framgia.dao.ICityDAO;
 import vn.framgia.dao.IFilmDAO;
 import vn.framgia.dao.IScheduleDAO;
+import vn.framgia.dao.IUserDAO;
+
 import java.io.Serializable;
 
 /**
@@ -20,4 +23,8 @@ public class BaseserviceImpl implements Serializable {
 
     @Autowired
     protected IScheduleDAO iScheduleDAO;
+
+    @Autowired
+	protected IUserDAO iUserDAO;
+
 }

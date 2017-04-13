@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
 /**
  * Created by FRAMGIA\duong.van.tien on 06/03/2017.
  *
@@ -400,6 +403,17 @@ public final class Helpers {
 	public static long getDayBetweenTwoDates(Date startDate, Date endDate) {
 		Long diff = endDate.getTime() - startDate.getTime();
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+	}
+	
+	public static String getUser() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
 	}
 
 }
