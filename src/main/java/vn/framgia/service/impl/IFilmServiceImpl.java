@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import vn.framgia.service.IFilmService;
 import vn.framgia.ulti.Constant;
 import vn.framgia.ulti.Helpers;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -62,5 +65,35 @@ public class IFilmServiceImpl extends BaseserviceImpl implements IFilmService {
             logger.error("Exception at function cloneData in IFilmServiceImpl : ", e);
         }
         return false;
+    }
+
+    @Override
+    public List<FilmBean> list(Integer offset, Integer maxResults, String cityName, String today) {
+        try {
+            List<Film> listFilms = iFilmDAO.list(offset, maxResults, cityName);
+            List<Schedule> listSchedules = iScheduleDAO.findScheduleToday(today);
+            if(!Helpers.isEmpty(listFilms)) {
+                List<FilmBean> listFilmBeans = new ArrayList<FilmBean>();
+                for(Film film : listFilms) {
+                    FilmBean filmBean = new FilmBean();
+                    BeanUtils.copyProperties(film, filmBean);
+                    for(Schedule schedule : listSchedules) {
+                        if (schedule.getFilm().getId().equals(filmBean.getId())) {
+                            filmBean.addSchedule(schedule.getTime());
+                        }
+                    }
+                    listFilmBeans.add(filmBean);
+                }
+                return listFilmBeans;
+            }
+        } catch (Exception e) {
+            logger.error("Exception at function list in class IFilmServiceImpl  : ", e);
+        }
+        return null;
+    }
+
+    @Override
+    public Long count() {
+        return iFilmDAO.count();
     }
 }

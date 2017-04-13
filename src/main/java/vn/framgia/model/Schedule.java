@@ -22,9 +22,12 @@ public class Schedule implements Serializable {
     @Column(name = "time")
     private String time;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "filmId")
     private Film film;
+
+    public Schedule() {
+    }
 
     public Schedule(String day, String time, Film film) {
         this.day = day;

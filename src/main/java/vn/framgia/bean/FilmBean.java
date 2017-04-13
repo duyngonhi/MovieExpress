@@ -1,8 +1,11 @@
 package vn.framgia.bean;
 
 import vn.framgia.model.Film;
+import vn.framgia.model.Schedule;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by FRAMGIA\duong.van.tien on 10/04/2017.
@@ -15,6 +18,12 @@ public class FilmBean {
     private Integer ratting;
     private String cinemaName;
     private String cityName;
+    private String day;
+    private String time;
+    private List<String> schedules = new ArrayList<String>();
+
+    public FilmBean() {
+    }
 
     public FilmBean(Integer id, String filmName, String image, Integer ratting,
                     String cinemaName, String cityName) {
@@ -72,6 +81,34 @@ public class FilmBean {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public List<String> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<String> schedules) {
+        this.schedules = schedules;
+    }
+
+    public void addSchedule(String schedule) {
+        this.schedules.add(schedule);
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public Film convertToFilm(FilmBean filmBean) {
