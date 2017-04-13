@@ -2,6 +2,7 @@ package vn.framgia.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by FRAMGIA\duong.van.tien on 10/04/2017.
@@ -14,9 +15,6 @@ public class Film implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(name = "filmId")
-    private String filmId;
 
     @Column(name = "filmName")
     private String filmName;
@@ -33,11 +31,8 @@ public class Film implements Serializable {
     @Column(name = "cityName")
     private String cityName;
 
-    @Column(name = "day")
-    private String day;
-
-    @Column(name = "time")
-    private String time;
+    @OneToMany
+    private Set<Schedule> schedule;
 
     public Integer getId() {
         return id;
@@ -45,14 +40,6 @@ public class Film implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getFilmId() {
-        return filmId;
-    }
-
-    public void setFilmId(String filmId) {
-        this.filmId = filmId;
     }
 
     public String getFilmName() {
@@ -95,19 +82,11 @@ public class Film implements Serializable {
         this.cityName = cityName;
     }
 
-    public String getDay() {
-        return day;
+    public Set<Schedule> getSchedule() {
+        return schedule;
     }
 
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setSchedule(Set<Schedule> schedule) {
+        this.schedule = schedule;
     }
 }

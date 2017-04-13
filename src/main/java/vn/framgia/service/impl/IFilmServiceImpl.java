@@ -45,11 +45,13 @@ public class IFilmServiceImpl extends BaseserviceImpl implements IFilmService {
                         String image = listImages.get(count).attr("src");
                         String filmName = listFilms.get(count).select("div.show_time h3").text();
                         String[] listTimesOfFilm = listFilms.get(count).select("div.show_time ul li").text().split(" ");
+                        FilmBean filmBean = new FilmBean(Integer.parseInt(filmId), filmName,
+                                image, random.nextInt(30)+5, cinemaName, cityName);
+                        Film film = filmBean.convertToFilm(filmBean);
+                        iFilmDAO.save(film);
                         for (String time : listTimesOfFilm) {
-                            FilmBean filmBean = new FilmBean(filmId, filmName, image, random.nextInt(30)+5,
-                                    cinemaName, cityName, Helpers.convertDatetoString(new Date()), time);
-                            Film film = filmBean.convertToFilm(filmBean);
-                            iFilmDAO.save(film);
+                            Schedule schedule = new Schedule(Helpers.convertDatetoString(new Date()), time, film);
+                            iScheduleDAO.save(schedule);
                         }
                         count++;
                     }
