@@ -19,7 +19,7 @@
 		<put-attribute name="title" value="Home" />
 		<put-attribute name="body" value="/WEB-INF/views/index.jsp" />
 	</definition>
-
+	
 	<definition name="films" extends="base.definition">
 		<put-attribute name="title" value="Home" />
 		<put-attribute name="body" value="/WEB-INF/views/films.jsp" />
@@ -40,4 +40,9 @@
 		<put-attribute name="body" value="/WEB-INF/views/user/registration.jsp" />
 	</definition>
 	
-</tiles-definitions>
+	<definition name="upload" extends="base.definition">
+		<put-attribute name="title" value="Upload" />
+		<put-attribute name="body" value="/WEB-INF/views/amazons3/upload.jsp" />
+	</definition>
+	
+ </tiles-definitions>

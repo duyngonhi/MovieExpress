@@ -3,6 +3,7 @@ package vn.framgia.ulti;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -24,6 +25,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 
 /**
  * Created by FRAMGIA\duong.van.tien on 06/03/2017.
@@ -414,6 +421,20 @@ public final class Helpers {
 			userName = principal.toString();
 		}
 		return userName;
+	}
+	
+	public static boolean upFileToAmozonS3(MultipartFile[] files,String bucketName, String accessKey, String secretKey) throws IOException{
+		for (int i = 0; i < files.length; i++) {
+			MultipartFile file = files[i];
+			AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
+			File fileupload = new File(file.getOriginalFilename());
+			fileupload.createNewFile();
+			FileOutputStream fileOutputStream = new FileOutputStream(fileupload);
+			fileOutputStream.write(file.getBytes());
+			fileOutputStream.close();
+			s3client.putObject(new PutObjectRequest(bucketName, file.getOriginalFilename(), fileupload));
+		}
+		return true;
 	}
 
 }
