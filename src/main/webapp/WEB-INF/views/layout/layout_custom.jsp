@@ -16,7 +16,7 @@
 	<link href="assets/css/style-responsive.css" rel="stylesheet">
 	<link href="assets/css/mystyle.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
-	
+
 	<!-- js placed at the end of the document so the pages load faster -->
 	<script src="assets/js/jquery.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
@@ -27,6 +27,15 @@
 	<script src="assets/js/jquery.scrollTo.min.js"></script>
 	<script src="assets/js/jquery.nicescroll.js" type="text/javascript"></script>
 	<script src="assets/js/common-scripts.js"></script>
+	<script src="assets/js/my-script.js"></script>
+
+	<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css"/>
+	<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css"/>
+	<script type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js">
+	</script>
+	<link rel="stylesheet"
+		  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
 </head>
 <body>

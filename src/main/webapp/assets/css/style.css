@@ -2241,3 +2241,11 @@ label {
 }
 
 
+ul.cityName {
+    background: red; height: 30px; width: 100%
+}
+
+ul > li.cityName {
+    float: left; margin-left: 20px; color: whitesmoke; width: auto
+}
+

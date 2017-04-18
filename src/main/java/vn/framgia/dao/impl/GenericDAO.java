@@ -4,6 +4,8 @@ import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import vn.framgia.model.Film;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -41,8 +43,24 @@ public abstract class GenericDAO<E, Id extends Serializable> extends HibernateDa
 		return entity;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void delete(E entity) {
 		getHibernateTemplate().delete(entity);
 		getHibernateTemplate().flush();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<E> list(Integer offset, Integer maxResults, String cityName) {
+		Criteria criteria = getHibernateTemplate().getSessionFactory().openSession().createCriteria(Film.class);
+		return criteria.add(Restrictions.like("cityName", "%"+cityName+"%"))
+			.setFirstResult(offset!=null?offset:0)
+			.setMaxResults(maxResults!=null?maxResults:15)
+			.list();
+	}
+
+	public Long count() {
+		return  (Long)getHibernateTemplate().getSessionFactory().openSession().createCriteria(this.getPersistentClass())
+				.setProjection(Projections.rowCount())
+				.uniqueResult();
 	}
 }
