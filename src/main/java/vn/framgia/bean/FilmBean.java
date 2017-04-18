@@ -10,25 +10,20 @@ import javax.persistence.Column;
 public class FilmBean {
 
     private Integer id;
-    private String filmId;
     private String filmName;
     private String image;
     private Integer ratting;
     private String cinemaName;
     private String cityName;
-    private String day;
-    private String time;
 
-    public FilmBean(String filmId, String filmName, String image, Integer ratting,
-                    String cinemaName, String cityName, String day, String time) {
-        this.filmId = filmId;
+    public FilmBean(Integer id, String filmName, String image, Integer ratting,
+                    String cinemaName, String cityName) {
+        this.id = id;
         this.filmName = filmName;
         this.image = image;
         this.ratting = ratting;
         this.cinemaName = cinemaName;
         this.cityName = cityName;
-        this.day = day;
-        this.time = time;
     }
 
     public Integer getId() {
@@ -37,14 +32,6 @@ public class FilmBean {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getFilmId() {
-        return filmId;
-    }
-
-    public void setFilmId(String filmId) {
-        this.filmId = filmId;
     }
 
     public String getFilmName() {
@@ -87,32 +74,13 @@ public class FilmBean {
         this.cityName = cityName;
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public Film convertToFilm(FilmBean filmBean) {
         Film film = new Film();
-        film.setFilmId(filmBean.getFilmId());
         film.setFilmName(filmBean.getFilmName());
         film.setImage(filmBean.getImage());
         film.setRatting(filmBean.getRatting());
         film.setCinemaName(filmBean.getCinemaName());
         film.setCityName(filmBean.getCityName());
-        film.setDay(filmBean.getDay());
-        film.setTime(filmBean.getTime());
         return film;
     }
 }

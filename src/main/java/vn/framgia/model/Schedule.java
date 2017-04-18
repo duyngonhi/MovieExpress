@@ -22,13 +22,14 @@ public class Schedule implements Serializable {
     @Column(name = "time")
     private String time;
 
-    @Column(name = "filmId")
-    private String filmId;
+    @ManyToOne
+    @JoinColumn(name = "filmId")
+    private Film film;
 
-    public Schedule(String day, String time, String filmId) {
+    public Schedule(String day, String time, Film film) {
         this.day = day;
         this.time = time;
-        this.filmId = filmId;
+        this.film = film;
     }
 
     public Integer getId() {
@@ -55,11 +56,11 @@ public class Schedule implements Serializable {
         this.time = time;
     }
 
-    public String getFilmId() {
-        return filmId;
+    public Film getFilm() {
+        return film;
     }
 
-    public void setFilmId(String filmId) {
-        this.filmId = filmId;
+    public void setFilm(Film film) {
+        this.film = film;
     }
 }
