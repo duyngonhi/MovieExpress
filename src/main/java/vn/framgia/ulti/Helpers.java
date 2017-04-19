@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -25,9 +26,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 /**
@@ -423,5 +426,18 @@ public final class Helpers {
 		}
 		return true;
 	}
+	
+	public static URL downloadFileS3(String bucketName, String accessKey, String secretKey, String nameFile) {
+		AmazonS3 s3client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
+		Date expiration = new Date();
+		long milliSeconds = expiration.getTime();
+		milliSeconds += 1000 * 60 * 60;
+		expiration.setTime(milliSeconds);
 
+		GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, nameFile);
+		generatePresignedUrlRequest.setMethod(HttpMethod.GET);
+		generatePresignedUrlRequest.setExpiration(expiration);
+
+		return s3client.generatePresignedUrl(generatePresignedUrlRequest);
+	}
 }

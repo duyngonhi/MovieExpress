@@ -18,6 +18,14 @@
                   <td><p id="countFile"><spring:message code="view.upload.select_file"/></p></td>
 				  <td><a id="btnupload" class="btn btn-success btn-sm pull-left"><spring:message code="view.upload.submit"/></a></td>	
               </tr>
+              <tr style="color: red;">
+              	<c:if test="${!empty message_save}">
+              		<td><c:out value="${message_save}"/></td>
+              	</c:if>
+              	<c:if test="${!empty message}">
+              		<td><c:out value="${message}"/></td>
+              	</c:if>
+              </tr>
               </tbody>
           </table>	
           </form:form>
@@ -39,15 +47,23 @@
                   <td></td>
                   <td></td>
               </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td><span class="badge bg-success"><i class=" fa fa-check"></i></span></td>
-<!--                   <td><span class="badge bg-important">No</span></td> -->
-                  <td><a id="btnPayment" class="btn btn-success btn-sm pull-left"><spring:message code="view.upload.up_file"/></a></td>
-				  <td><a id="btnPayment" class="btn btn-success btn-sm pull-left"><spring:message code="view.upload.load_file"/></a></td>	
-              </tr>
+              <c:if test="${!empty lstFile}">
+              		<c:forEach items="${lstFile}" var="file">
+              			<tr>
+		                  <td><c:out value="${file.nameFile}"/></td>
+		                  <td><spring:message code="bucketname"/></td>
+		                  <td><c:out value="${file.description}"/></td>
+		                  <c:if test="${file.status == 'S3'}">
+		                  	<td><span class="badge bg-success"><i class="fa fa-check"></i></span></td>
+						  	<td><a href="download/${file.id}" class="btn btn-success btn-sm pull-left"><spring:message code="view.upload.load_file"/></a></td>	
+		                  </c:if>
+		                  <c:if test="${file.status != 'S3'}">
+		                  	<td><span class="badge bg-important">No</span></td>
+		                  	<td><a id="btnloadfile" class="btn btn-success btn-sm pull-left"><spring:message code="view.upload.up_file"/></a></td>
+		                  </c:if>
+		              	</tr>
+              		</c:forEach>
+              </c:if>
               </tbody>
           </table>
           </form:form>
@@ -62,7 +78,7 @@ $('#myFile').bind('change', function () {
 	var txt = "";
     if (typeof($("#myFile")[0].files) != "undefined") {
         if ($("#myFile")[0].files.length == 0) {
-            txt = "Select one or more files.";
+        	txt = '<spring:message code="view.upload.select_file"/>';
         } else {
             for (var i = 0; i < $("#myFile")[0].files.length; i++) {
                 txt += "<br><strong>" + (i+1) + ". file</strong><br>";

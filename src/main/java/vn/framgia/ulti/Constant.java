@@ -9,4 +9,5 @@ public final class Constant {
     public final static String USERAGENT = "userAgent";
     public final static String URL_ORIGIN = "http://tintuc.vn/tien-ich/lich-phim-chieu-rap-";
     public final static String URI_FILMS = "films";
+    public final static String STATUS_FILE = "S3";
 }
